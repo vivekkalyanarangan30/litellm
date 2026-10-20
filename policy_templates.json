@@ -2708,5 +2708,136 @@
       "FIPPA"
     ],
     "estimated_latency_ms": 1
+  },
+  {
+    "id": "india-pii-protection",
+    "title": "India PII Protection (DPDP Act)",
+    "description": "Protects Indian personal identifiers covered by the Digital Personal Data Protection Act, 2023. Masks Aadhaar numbers (Verhoeff checked), PAN, GSTIN (check character verified), passport, driving licence and vehicle registration numbers, IFSC codes, UPI IDs, payment card numbers, Indian mobile numbers and email addresses.",
+    "icon": "ShieldCheckIcon",
+    "iconColor": "text-red-500",
+    "iconBg": "bg-red-50",
+    "guardrails": [
+      "in-pii-government-identifiers",
+      "in-pii-financial",
+      "in-pii-contact-information"
+    ],
+    "complexity": "Medium",
+    "guardrailDefinitions": [
+      {
+        "guardrail_name": "in-pii-government-identifiers",
+        "litellm_params": {
+          "guardrail": "litellm_content_filter",
+          "mode": "pre_call",
+          "patterns": [
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "in_aadhaar",
+              "action": "MASK"
+            },
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "in_pan",
+              "action": "MASK"
+            },
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "passport_india",
+              "action": "MASK"
+            },
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "in_driving_licence",
+              "action": "MASK"
+            },
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "in_vehicle_registration",
+              "action": "MASK"
+            }
+          ],
+          "pattern_redaction_format": "[{pattern_name}_REDACTED]"
+        },
+        "guardrail_info": {
+          "description": "Masks Aadhaar, PAN, Indian passport, driving licence and vehicle registration numbers"
+        }
+      },
+      {
+        "guardrail_name": "in-pii-financial",
+        "litellm_params": {
+          "guardrail": "litellm_content_filter",
+          "mode": "pre_call",
+          "patterns": [
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "in_gstin",
+              "action": "MASK"
+            },
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "in_ifsc",
+              "action": "MASK"
+            },
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "in_upi_id",
+              "action": "MASK"
+            },
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "credit_card",
+              "action": "MASK"
+            }
+          ],
+          "pattern_redaction_format": "[{pattern_name}_REDACTED]"
+        },
+        "guardrail_info": {
+          "description": "Masks GSTIN, IFSC codes, UPI IDs and payment card numbers"
+        }
+      },
+      {
+        "guardrail_name": "in-pii-contact-information",
+        "litellm_params": {
+          "guardrail": "litellm_content_filter",
+          "mode": "pre_call",
+          "patterns": [
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "in_phone",
+              "action": "MASK"
+            },
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "in_phone_contextual",
+              "action": "MASK"
+            },
+            {
+              "pattern_type": "prebuilt",
+              "pattern_name": "email",
+              "action": "MASK"
+            }
+          ],
+          "pattern_redaction_format": "[{pattern_name}_REDACTED]"
+        },
+        "guardrail_info": {
+          "description": "Masks Indian mobile numbers and email addresses"
+        }
+      }
+    ],
+    "templateData": {
+      "policy_name": "india-pii-protection",
+      "description": "India PII protection policy under the DPDP Act, 2023. Masks Aadhaar, PAN, GSTIN, passport, driving licence and vehicle registration numbers, IFSC codes, UPI IDs, payment cards, Indian mobile numbers and email addresses.",
+      "guardrails_add": [
+        "in-pii-government-identifiers",
+        "in-pii-financial",
+        "in-pii-contact-information"
+      ],
+      "guardrails_remove": []
+    },
+    "tags": [
+      "PII Protection",
+      "India",
+      "DPDP"
+    ],
+    "estimated_latency_ms": 1
   }
 ]

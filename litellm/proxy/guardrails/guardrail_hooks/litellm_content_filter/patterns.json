@@ -631,6 +631,75 @@
       "description": "Detects University of Toronto TCard campus ID card numbers (16-digit). Context keywords are critical to distinguish from payment card numbers.",
       "keyword_pattern": "\\b(?:tcard\\s*number|t-card\\s*number|tcard|t-card|campus\\s*card|campus\\s*id|university\\s*card)\\b",
       "allow_word_numbers": false
+    },
+    {
+      "name": "in_aadhaar",
+      "display_name": "Aadhaar Number (India)",
+      "pattern": "\\b[2-9]\\d{3}[\\s\\-]?\\d{4}[\\s\\-]?\\d{4}\\b",
+      "validator": "verhoeff",
+      "category": "Indian PII Patterns",
+      "description": "Detects 12-digit Aadhaar numbers (first digit 2-9) that pass the Verhoeff check digit"
+    },
+    {
+      "name": "in_pan",
+      "display_name": "PAN (India Permanent Account Number)",
+      "pattern": "\\b[A-Z]{3}[ABCFGHJLPT][A-Z]\\d{4}[A-Z]\\b",
+      "category": "Indian PII Patterns",
+      "description": "Detects Indian PAN numbers (5 letters with the holder type as the 4th, 4 digits, 1 letter)"
+    },
+    {
+      "name": "in_gstin",
+      "display_name": "GSTIN (India GST Identification Number)",
+      "pattern": "\\b\\d{2}[A-Z]{3}[ABCFGHJLPT][A-Z]\\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]\\b",
+      "validator": "gstin",
+      "category": "Indian PII Patterns",
+      "description": "Detects 15-character GSTINs (state code + PAN + entity number + Z) that pass the mod-36 check character"
+    },
+    {
+      "name": "in_ifsc",
+      "display_name": "IFSC (India Bank Branch Code)",
+      "pattern": "(?-i:\\b[A-Z]{4}0[A-Z0-9]{6}\\b)",
+      "category": "Indian PII Patterns",
+      "description": "Detects 11-character uppercase IFSC codes (4 letter bank code + 0 + 6 character branch code)"
+    },
+    {
+      "name": "in_upi_id",
+      "display_name": "UPI ID (India Virtual Payment Address)",
+      "pattern": "(?<![\\w.\\-])[\\w.\\-]{2,256}@[A-Z][A-Z0-9]{1,63}(?![\\w.\\-@])",
+      "category": "Indian PII Patterns",
+      "description": "Detects UPI IDs (handle@psp with no dot after the @, so email addresses do not match) near UPI context words",
+      "keyword_pattern": "\\b(?:upi(?:\\s*id)?|vpa|virtual\\s*payment\\s*address)\\b",
+      "allow_word_numbers": false
+    },
+    {
+      "name": "in_phone",
+      "display_name": "Phone Number (India, +91)",
+      "pattern": "(?<!\\w)\\+91[\\s\\-]?[6-9]\\d{4}[\\s\\-]?\\d{5}\\b",
+      "category": "Indian PII Patterns",
+      "description": "Detects Indian mobile numbers written with the +91 country code"
+    },
+    {
+      "name": "in_phone_contextual",
+      "display_name": "Phone Number (India, contextual)",
+      "pattern": "\\b0?[6-9]\\d{4}[\\s\\-]?\\d{5}\\b",
+      "category": "Indian PII Patterns",
+      "description": "Detects 10-digit Indian mobile numbers without a country code near phone context words",
+      "keyword_pattern": "\\b(?:mobile|phone|contact|whatsapp|cell)(?:\\s*(?:no|number|num))?\\b",
+      "allow_word_numbers": false
+    },
+    {
+      "name": "in_driving_licence",
+      "display_name": "Driving Licence Number (India)",
+      "pattern": "\\b(?:AN|AP|AR|AS|BR|CG|CH|DD|DL|DN|GA|GJ|HP|HR|JH|JK|KA|KL|LA|LD|MH|ML|MN|MP|MZ|NL|OD|OR|PB|PY|RJ|SK|TN|TR|TS|UK|UP|WB)[\\s\\-]?\\d{2}[\\s\\-]?(?:19|20)\\d{2}[\\s\\-]?\\d{7}\\b",
+      "category": "Indian PII Patterns",
+      "description": "Detects Indian driving licence numbers (state code + RTO code + issue year + 7 digit serial)"
+    },
+    {
+      "name": "in_vehicle_registration",
+      "display_name": "Vehicle Registration Number (India)",
+      "pattern": "(?-i:\\b(?:AN|AP|AR|AS|BR|CG|CH|DD|DL|DN|GA|GJ|HP|HR|JH|JK|KA|KL|LA|LD|MH|ML|MN|MP|MZ|NL|OD|OR|PB|PY|RJ|SK|TN|TR|TS|UK|UP|WB)[\\s\\-]?\\d{1,2}[\\s\\-]?[A-Z]{1,3}[\\s\\-]?\\d{4}\\b|\\b\\d{2}[\\s\\-]?BH[\\s\\-]?\\d{4}[\\s\\-]?[A-Z]{1,2}\\b)",
+      "category": "Indian PII Patterns",
+      "description": "Detects uppercase Indian vehicle registration numbers (state series and BH series)"
     }
   ]
 }
